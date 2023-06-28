@@ -1,0 +1,46 @@
+apiVersion: apps/v1 
+kind: Deployment 
+metadata: 
+  name: auth-api 
+  labels: 
+    app: auth-api 
+spec: 
+  replicas: 1 
+  selector: 
+    matchLabels: 
+      app: auth-api 
+  template: 
+    metadata: 
+      labels: 
+        app: auth-api 
+      annotations: 
+        admission.kubernetes.io/webhook: "validation.example.com/my-validating-webhook-config" # Add your webhook name here
+    spec: 
+      containers: 
+      - name: auth-api 
+        image: mihirshah99/auth:latest 
+        resources: 
+          limits: 
+            memory: 512Mi 
+            cpu: "1" 
+          requests: 
+            memory: 256Mi 
+            cpu: "0.2" 
+        env: 
+        - name: AUTH_API_PORT # Add Auth API deployemnt port here
+          valueFrom: 
+            configMapKeyRef: 
+              name: auth-api 
+              key: AUTH_API_PORT # Add Auth API deployemnt port here
+        - name: USERS_API_ADDRESS # Add Users API address here
+          valueFrom: 
+            configMapKeyRef: 
+              name: auth-api 
+              key: USERS_API_ADDRESS # Add Users API address here
+        - name: JWT_SECRET # Add JWT secret name here
+          valueFrom: 
+            secretKeyRef: 
+              name: auth-api 
+              key: JWT_SECRET # Add JWT secret name here
+        ports: 
+        - containerPort: 8081 

@@ -1,0 +1,13 @@
+apiVersion: projectcalico.org/v3 
+kind: GlobalNetworkPolicy 
+metadata: 
+  name: restrict-egress 
+spec: 
+  selector: projectcalico.org/namespace == 'default' 
+  egress: 
+    - action: Allow 
+      destination: 
+        nets: 
+          - 192.0.2.0/24 
+  types: 
+    - Egress 

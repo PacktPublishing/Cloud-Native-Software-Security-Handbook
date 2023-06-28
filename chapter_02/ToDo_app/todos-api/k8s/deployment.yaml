@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todos-api
+  labels:
+    app: todos-api
+    redis-access: "true"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: todos-api
+  template:
+    metadata:
+      labels:
+        app: todos-api
+    spec:
+      containers:
+      - name: todos-api
+        image: mihirshah99/todos:latest
+        env:
+        - name: TODO_API_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: todos-api
+              key: TODO_API_PORT
+        - name: REDIS_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: todos-api
+              key: REDIS_HOST
+        - name: REDIS_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: todos-api
+              key: REDIS_PORT
+        - name: REDIS_CHANNEL
+          valueFrom:
+            configMapKeyRef:
+              name: todos-api
+              key: REDIS_CHANNEL
+        - name: JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: todos-api
+              key: JWT_SECRET
+        ports:
+        - containerPort: 8082

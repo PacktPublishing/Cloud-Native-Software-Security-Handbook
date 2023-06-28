@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: log-message-processor
+  labels:
+    app: log-message-processor
+    redis-access: "true"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: log-message-processor
+  template:
+    metadata:
+      labels:
+        app: log-message-processor
+    spec:
+      containers:
+      - name: log-message-processor
+        image: mihirshah99/log-message:latest
+        env:
+        - name: REDIS_CHANNEL
+          valueFrom:
+            configMapKeyRef:
+              name: log-message-processor
+              key: REDIS_CHANNEL
+        - name: REDIS_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: log-message-processor
+              key: REDIS_HOST
+        - name: REDIS_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: log-message-processor
+              key: REDIS_PORT

@@ -1,0 +1,16 @@
+--- 
+
+protocol: http 
+httpPort: 9200 
+transportPort: 9300 
+service: 
+  labels: {} 
+  labelsHeadless: {} 
+  type: LoadBalancer 
+  nodePort: "" 
+  annotations: {} 
+  httpPortName: http 
+  transportPortName: transport 
+  loadBalancerIP: "" 
+  loadBalancerSourceRanges: [] 
+  externalTrafficPolicy: "" 

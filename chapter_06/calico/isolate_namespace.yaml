@@ -1,0 +1,12 @@
+apiVersion: projectcalico.org/v3 
+kind: GlobalNetworkPolicy 
+metadata: 
+  name: namespace-a-to-namespace-b 
+spec: 
+  selector: projectcalico.org/namespace == 'namespace-b' 
+  ingress: 
+    - action: Allow 
+      source: 
+        selector: projectcalico.org/namespace == 'namespace-a' 
+  types: 
+    - Ingress 

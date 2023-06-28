@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  labels:
+    app: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: mihirshah99/frontend:latest
+        env:
+        - name: PORT
+          valueFrom:
+            configMapKeyRef:
+              name: frontend
+              key: PORT
+        - name: AUTH_API_ADDRESS
+          valueFrom:
+            configMapKeyRef:
+              name: frontend
+              key: AUTH_API_ADDRESS
+        - name: TODOS_API_ADDRESS
+          valueFrom:
+            configMapKeyRef:
+              name: frontend
+              key: TODOS_API_ADDRESS
+        ports: 
+        - containerPort: 8080

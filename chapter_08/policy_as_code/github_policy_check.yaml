@@ -1,0 +1,18 @@
+name: Policy Check 
+
+on: 
+  push: 
+    branches: 
+      - main 
+jobs: 
+  policy_check: 
+    runs-on: ubuntu-latest 
+    steps: 
+    - name: Check out code 
+      uses: actions/checkout@v2 
+    - name: Set up OPA 
+      run: | 
+        curl -L -o opa https://openpolicyagent.org/downloads/latest/opa_linux_amd64 
+        chmod 755 ./opa 
+    - name: Run Policy Check 
+      run: ./opa eval --data policy.rego --input main.tf "data.main.allow" 

@@ -1,0 +1,15 @@
+checkov: 
+  checks:
+    - name: "Ensure S3 buckets are not public" 
+      id: "CKV_CUSTOM_001" 
+      categories: ["S3"] 
+      supported_frameworks: ["terraform"] 
+      language: "rego" 
+      scope: "resource" 
+      block_type: "aws_s3_bucket" 
+      inspect_block: | 
+        package main 
+        default allow = false 
+        allow { 
+          input.acl == "private" 
+        } 

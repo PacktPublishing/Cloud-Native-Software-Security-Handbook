@@ -1,0 +1,22 @@
+apiVersion: admissionregistration.k8s.io/v1 
+kind: ValidatingWebhookConfiguration 
+metadata: 
+  name: opa-validating-webhook 
+webhooks: 
+- name: validate.opa.kubernetes.io # Add your webhook name here
+  rules: 
+  - apiGroups: 
+    - "" 
+    apiVersions: 
+    - v1 
+    operations: 
+    - CREATE 
+    - UPDATE 
+    resources: 
+    - configmaps 
+  clientConfig: 
+    caBundle: "" 
+    service: 
+      name: opa 
+      namespace: default 
+      path: "/v1/data/kubernetes/validate" 

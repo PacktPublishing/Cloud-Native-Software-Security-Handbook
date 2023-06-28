@@ -1,0 +1,17 @@
+apiVersion: projectcalico.org/v3 
+kind: GlobalNetworkPolicy 
+metadata: 
+  name: restrict-ingress-port-protocol 
+spec: 
+  selector: projectcalico.org/namespace == 'default' 
+  ingress: 
+    - action: Allow 
+      protocol: TCP 
+      source: 
+        nets: 
+          - <your-source-ip-range> 
+      destination: 
+        ports: 
+          - 80 
+  types: 
+    - Ingress 

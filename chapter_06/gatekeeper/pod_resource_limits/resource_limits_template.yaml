@@ -1,0 +1,25 @@
+apiVersion: templates.gatekeeper.sh/v1beta1 
+kind: ConstraintTemplate 
+metadata: 
+  name: k8sresourcelimits 
+spec: 
+  crd: 
+    spec: 
+      names: 
+        kind: K8sResourceLimits 
+        listKind: K8sResourceLimitsList 
+        plural: k8sresourcelimits 
+        singular: k8sresourcelimits 
+
+  targets: 
+    - target: admission.k8s.gatekeeper.sh 
+      rego: | 
+        package k8sresourcelimits 
+
+        violation[{"msg": msg}] { 
+          input.review.object.kind == "Pod" 
+          container := input.review.object.spec.containers[_] 
+          not container.resources.limits["cpu"] 
+          not container.resources.limits["memory"] 
+          msg := "Container must have CPU and memory limits specified." 
+        }

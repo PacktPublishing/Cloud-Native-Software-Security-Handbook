@@ -1,0 +1,25 @@
+apiVersion: templates.gatekeeper.sh/v1beta1 
+kind: ConstraintTemplate 
+metadata: 
+  name: k8sallowedrepos 
+spec: 
+  crd: 
+    spec: 
+      names: 
+        kind: K8sAllowedRepos 
+        listKind: K8sAllowedReposList 
+        plural: k8sallowedrepos 
+        singular: k8sallowedrepos 
+
+  targets: 
+    - target: admission.k8s.gatekeeper.sh 
+
+      rego: | 
+        package k8sallowedrepos 
+
+        violation[{"msg": msg}] { 
+        input.review.object.kind == "Pod"
+        container := input.review.object.spec.containers[_] 
+        not startswith(container.image, input.parameters.repo)
+        msg := sprintf("Container image '%v' is not allowed. Only images from the '%v' registry are permitted.", [container.image, input.parameters.repo]) 
+        }
