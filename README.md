@@ -59,9 +59,6 @@ Software required | OS required |
 | Terraform v1.4.6  | Mac OS X, and Linux (Any) |
 | Checkov v2.3.245  | Mac OS X, and Linux (Any) |
 
-
-We also provide a PDF file that has color images of the screenshots/diagrams used in this book. [Click here to download it](). <!--- Link to be provided by the editor -->
-
 ## Get to Know the Author
 **Mihir Shah**
 is a renowned cybersecurity expert, is celebrated for his innovative solutions and significant contributions. As an invited Industry mentor at Stanford University, he imparts knowledge on Web Exploitation, Kubernetes Exploitation, Cryptography, and Cloud Security. He usually speaks at international security conferences, sharing his research with the wider security community. He is also a fellow member of the BCS and other engineering societies, fostering a community of knowledge sharing and being a sought-after mentor and advisor for budding entrepreneurs in the security space. His research articles and projects in the security space, have received wide acclaim and are used by multiple organizations for security training & learning
